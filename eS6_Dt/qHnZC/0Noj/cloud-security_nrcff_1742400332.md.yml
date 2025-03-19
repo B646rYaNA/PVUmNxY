@@ -1,0 +1,78 @@
+version: 2
+
+before:
+  hooks:
+    - go mod download
+    - go mod verify
+
+builds:
+  - main: cmd/nuclei/main.go
+    binary: nuclei
+    id: nuclei-cli
+    env:
+      - CGO_ENABLED=0
+    goos: [windows,linux,darwin]
+    goarch: [amd64,'386',arm,arm64]
+    ignore:
+      - goos: darwin
+        goarch: '386'
+      - goos: windows
+        goarch: arm
+      - goos: windows
+        goarch: arm64
+    flags:
+      - -trimpath
+      - -pgo=auto
+    ldflags:
+      - -s
+      - -w
+
+#- main: cmd/tmc/main.go
+#  binary: tmc
+#  id: annotate
+#
+#  env:
+#  - CGO_ENABLED=0
+#
+#  goos: [linux]
+#  goarch: [amd64]
+
+archives:
+  - format: zip
+    id: nuclei
+    builds: [nuclei-cli]
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ if eq .Os "darwin" }}macOS{{ else }}{{ .Os }}{{ end }}_{{ .Arch }}'
+
+checksum:
+  algorithm: sha256
+
+dockers:
+  - image_templates:
+      - "{{ .ProjectName }}:{{ .Tag }}"
+      - "{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+      - "{{ .ProjectName }}:v{{ .Major }}"
+      - "{{ .ProjectName }}:latest"
+    dockerfile: Dockerfile.goreleaser
+    use: buildx
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.authors=ProjectDiscovery"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.description=\"Nuclei is a fast, customizable vulnerability scanner powered by the global security community and built on a simple YAML-based DSL, enabling collaboration to tackle trending vulnerabilities on the internet. It helps you find vulnerabilities in your applications, APIs, networks, DNS, and cloud configurations.\""
+      - "--label=org.opencontainers.image.licenses=MIT"
+      - "--label=org.opencontainers.image.ref.name={{ .Tag }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.url=https://github.com/projectdiscovery/{{ .ProjectName }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+
+announce:
+  slack:
+    enabled: true
+    channel: '#release'
+    username: GoReleaser
+    message_template: 'New Release: {{ .ProjectName }} {{.Tag}} is published! Check it out at {{ .ReleaseURL }}'
+
+  discord:
+    enabled: true
+    message_template: '**New Release: {{ .ProjectName }} {{.Tag}}** is published! Check it out at {{ .ReleaseURL }}'

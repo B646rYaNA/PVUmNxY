@@ -11,7 +11,6 @@
 * Fetch submodules (if supported, otherwise warn)
 
 ## [0.2.20] 2022-04-04
-
 ## Added
 * Add ability to pass submodules to `builtins.fetchGit`
 

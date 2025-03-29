@@ -17,7 +17,6 @@ export default {
     },
     MD036: false,
     MD040: false,
-    MD045: false,
     MD046: false,
   },
   ignores: [

@@ -11,7 +11,6 @@ export default {
     MD013: false,
     MD024: {
       allow_different_nesting: true,
-    },
     MD035: {
       style: "---",
     },

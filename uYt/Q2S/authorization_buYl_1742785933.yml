@@ -8,7 +8,6 @@ AllCops:
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
 
-Gemspec/DevelopmentDependencies:
   Enabled: true
 
 Metrics/BlockLength:

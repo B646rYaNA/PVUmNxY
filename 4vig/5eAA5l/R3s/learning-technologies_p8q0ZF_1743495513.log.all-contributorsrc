@@ -45,7 +45,6 @@
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true,
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "90DaysOfCyberSecurity",

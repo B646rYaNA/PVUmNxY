@@ -2,7 +2,6 @@ MIT License
 Copyright (c) 2021 Jason M.
 of this software and associated documentation files (the "Software"), to deal
 furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
 
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

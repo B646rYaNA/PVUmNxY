@@ -1,4 +1,3 @@
 
 [*]
-[*.{js,json,ts,vue,svelte,html}]
 indent_size = 2
